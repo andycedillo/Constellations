@@ -1,20 +1,21 @@
 // an array to add multiple particles
 let particles = [];
 let img;
-let imgs = [];
+let kittens = [];
+let countZoom;
 
 
 function preload() {
 
 
     for (let i = 1; i < 80; i++)
-        imgs[i] = loadImage('assets/cell-(' + i + ').jpg');
+        kittens[i] = loadImage('assets/cell-(' + i + ').jpg');
 }
 
 function setup() {
     createCanvas(window.innerWidth, window.innerHeight);
-    let img = random(imgs);
-    for (let i = 0; i < width / 10; i++) {
+
+    for (let i = 0; i < width / 5; i++) {
         particles.push(new Particle());
     }
 }
@@ -23,7 +24,7 @@ function draw() {
     background(0, 0, 100);
     push();
     //translate(width / 2, height / 2);
-    //scale();
+    //scale(4);
     for (let i = 0; i < particles.length; i++) {
         particles[i].createParticle();
         //particles[i].moveParticle();
@@ -32,18 +33,33 @@ function draw() {
     pop();
 }
 
+window.onresize = function() {
+    // assigns new values for width and height variables
+    w = window.innerWidth;
+    h = window.innerHeight;
+    canvas.size(w, h);
+}
+
+function mouseWheel(event) {
+    print(event.delta);
+    //move the square according to the vertical scroll amount
+    countZoom += map(event.delta, 0, 1, 0, height);
+    //uncomment to block page scrolling
+    //return false;
+}
+
 
 // this class describes the properties of a single particle.
 class Particle {
     // setting the co-ordinates, radius and the
     // speed of a particle in both the co-ordinates axes.
-    constructor(pic) {
+    constructor() {
         this.x = random(0, width);
         this.y = random(0, height);
         this.r = 30
         this.xSpeed = random(-2, 2);
         this.ySpeed = random(-1, 1.5);
-        this.picture = imgs
+        this.kitten = random(kittens);
 
     }
 
@@ -52,7 +68,7 @@ class Particle {
         noStroke();
         fill('rgba(200,169,169,0.5)');
         //circle(this.x, this.y, this.r);
-        image(imgs[67], this.x, this.y, this.r, this.r);
+        image(this.kitten, this.x, this.y, this.r, this.r);
     }
 
     // setting the particle in motion.
