@@ -15,7 +15,7 @@ function preload() {
 function setup() {
     createCanvas(window.innerWidth, window.innerHeight);
 
-    for (let i = 0; i < width / 5; i++) {
+    for (let i = 0; i < width / 4; i++) {
         particles.push(new Particle());
     }
 }
