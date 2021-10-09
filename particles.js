@@ -62,7 +62,7 @@ class Particle {
     constructor() {
         this.x = random(0, width);
         this.y = random(0, height);
-        this.r = random(0,50);
+        this.r = random(0,30);
         this.xSpeed = random(-2, 2);
         this.ySpeed = random(-1, 1.5);
         this.cell = random(cells);
