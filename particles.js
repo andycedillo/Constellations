@@ -98,7 +98,7 @@ class Particle {
     joinParticles(particles) {
         particles.forEach(element => {
             let dis = dist(this.x, this.y, element.x, element.y);
-            if (dis < 80) {
+            if (dis < 150) {
                 stroke('rgba(255,255,255');
                 line(this.x, this.y, element.x, element.y);
             }
