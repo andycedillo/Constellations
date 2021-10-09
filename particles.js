@@ -10,7 +10,7 @@ let  randomImg;
 
 
 function preload() {
-    for (let i = 1; i < 11; i++){
+    for (let i = 1; i < 44; i++){
         cells[i - 1] = loadImage('assets/cell-(' + i + ').jpg');
     }
 
