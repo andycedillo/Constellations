@@ -19,7 +19,7 @@ function preload() {
 function setup() {
     createCanvas(window.innerWidth, window.innerHeight);
     flagMove = 0;
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 45; i++) {
         particles.push(new Particle());
     }
 }
@@ -98,7 +98,7 @@ class Particle {
     joinParticles(particles) {
         particles.forEach(element => {
             let dis = dist(this.x, this.y, element.x, element.y);
-            if (dis < 150) {
+            if (dis < 100) {
                 stroke('rgba(255,255,255');
                 line(this.x, this.y, element.x, element.y);
             }
