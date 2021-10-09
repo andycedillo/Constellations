@@ -19,7 +19,7 @@ function preload() {
 function setup() {
     createCanvas(window.innerWidth, window.innerHeight);
     flagMove = 0;
-    for (let i = 0; i < width / 4; i++) {
+    for (let i = 0; i < 30; i++) {
         particles.push(new Particle());
     }
 }
