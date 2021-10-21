@@ -4,13 +4,11 @@ let sf = 0.93;
 let x = 0;
 let y = 0; 
 let mx, my; 
-let flagMove;
 let  randomImg;
-let alphaC = 20;
-let alphaI;
-let white;
-let hhalf = 1500;
-let newhalf;
+let interA ;
+ 
+
+
 
 
 function preload() {
@@ -23,8 +21,6 @@ function preload() {
 function setup() {
     createCanvas(window.innerWidth, window.innerHeight);
 
-
-    flagMove = 0;
     for (let i = 0; i < 45; i++) {
         particles.push(new Particle());
     }
@@ -33,13 +29,14 @@ function setup() {
 function draw() {
     mx = mouseX;
     my = mouseY;
+
     background(0, 0, 100);
     translate(mx, my);
     scale(sf);
     translate(-mx, -my);
-    print(sf);
-    newalphaC = map(alphaC, 1, 20, 0, 1);
-    //print('alpha' + newalphaC);
+    newalphaC = map(sf, 0, 17,300,10);
+    newalphaB = map(sf, -1, 1,0,500);
+    print( sf);
 
 
     if (mouseIsPressed) {
@@ -50,13 +47,22 @@ function draw() {
       if (sf <= 0.89){
          sf = 1;
       }
+
+      if (sf >= 15){
+          sf = 15;
+      }
+
   
  
     for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
         particles[i].createParticle();
             //particles[i].moveParticle();
         particles[i].joinParticles(particles.slice(i));
     }
+
+ 
+
 
     for (let a = 0; a < 45 ; a++){
         particles[a].createStar();
@@ -84,27 +90,31 @@ class Particle {
     constructor() {
         this.x = random(0, width);
         this.y = random(0, height);
-        this.xstar = random(0,width);
-        this.ystar = random(0, height);
-        this.r = random(0,30);
+        this.xstar = random(10,width);
+        this.ystar = random(10, height);
+        this.r = random(3,30);
         this.xSpeed = random(-2, 2);
         this.ySpeed = random(-1, 1.5);
         this.cell = random(cells);
+        this.alpha = 0.5;
+        this.color = color(255, 255, 255    );
+        this.increase = true;
+        this.gradientone = color(255,255,0);
+        this.gradienttwo = color(0,0,255);
+        this.rcolorone = random(0,width);
+        this.rcolortwo = random(0,height);
 
     }
 
     // creation of a particle.
     createParticle() {
         noStroke();
-        fill('rgba(200,169,169,0.5)');
-        //white = color(100, 50, 100);
-        //white.setAlpha(1);
-        //fill(white);
+        this.color.setAlpha(this.alpha);
+        fill(this.color);
         circle(this.x, this.y, this.r);
         if(sf > 1){
-            //tint(255, 127);
+            //tint(255, this.alpha);
             image(this.cell, this.x, this.y, this.r, this.r);
-            //console.log(this.cell);
         }
     }
 
@@ -117,19 +127,16 @@ class Particle {
     createPlanet() {
         noStroke();
         fill('rgba(200,169,169)');
-        newhalf = map(hhalf, 0, 500, width/2, 1080);
-        circle(this.x , height / 2 + 200, 50);
+        circle(this.x , height / 2 + 200, 80);
     }
 
 
-    // setting the particle in motion.
-    moveParticle() {
-        if (this.x < 0 || this.x > width)
-            this.xSpeed *= -1;
-        if (this.y < 0 || this.y > height)
-            this.ySpeed *= -1;
-        this.x += this.xSpeed;
-        this.y += this.ySpeed;
+    update() {
+        if (this.increase && this.alpha >= 0.5) {
+          let rate = random(0.3, 0.4);
+          this.alpha = newalphaC;
+        }
+     
     }
 
 
@@ -137,14 +144,25 @@ class Particle {
         particles.forEach(element => {
             let dis = dist(this.x, this.y, element.x, element.y);
             if (dis < 150) {
-                stroke('rgba(255,255,255');
+                strokeWeight(0.8);
+                stroke(255,255,255);
                 line(this.x, this.y, element.x, element.y);
-            if (dis > 150){
-                print('entraste');
-                stroke('rgba(200,100,0');
+
+                if(this.x > this.rcolorone){
+                interA = lerpColor(this.gradientone,this.gradienttwo, 0.2);
+                strokeWeight(0.8);
+                stroke(interA);
                 line(this.x, this.y, element.x, element.y);
                 }
+                if(this.y > this.rcolortwo){
+                    interA = lerpColor(this.gradientone,this.gradienttwo, 0.9);
+                    strokeWeight(0.8);
+                    stroke(interA);
+                    line(this.x, this.y, element.x, element.y);
+                    }
+
             }
         });
     }
+
 }
